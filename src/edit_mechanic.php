@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->num_rows > 0) {
         $stmt->close();
         $conn->close();
-        header("Location: admin.php?error=Mechanic with name '$name' already exists. Please choose a different name.");
+        header("Location: ../route/admin.php?error=Mechanic with name '$name' already exists. Please choose a different name.");
         exit();
     } else {
         // Check if the mechanic is free on the current appointment date

@@ -9,6 +9,26 @@ $car_engine_number = $_POST['car_engine_number'];
 $appointment_date = $_POST['appointment_date'];
 $mechanic_id = $_POST['mechanic'];
 
+// Check if car_license_number is unique
+$sql = "SELECT COUNT(*) as count FROM Clients WHERE car_license_number = '$car_license_number'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+
+if ($row['count'] > 0) {
+    header("Location: ../route/index.php?error=This car license number has been entered before.");
+    exit();
+}
+
+// Check if car_engine_number is unique
+$sql = "SELECT COUNT(*) as count FROM Clients WHERE car_engine_number = '$car_engine_number'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+
+if ($row['count'] > 0) {
+    header("Location: ../route/index.php?error=This car engine number has been entered before.");
+    exit();
+}
+
 // Check if client exists or insert new client
 $sql = "SELECT client_id FROM Clients WHERE phone = '$phone'";
 $result = $conn->query($sql);
@@ -28,15 +48,16 @@ $sql = "SELECT COUNT(*) as count FROM Appointments
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 if ($row['count'] > 0) {
-    echo "You already have an appointment on this date.";
+    header("Location: ../route/index.php?error=You already have an appointment on this date.");
+    exit();
 } else {
     // Proceed to book the appointment
     $sql = "INSERT INTO Appointments (client_id, mechanic_id, appointment_date) 
             VALUES ('$client_id', '$mechanic_id', '$appointment_date')";
     if ($conn->query($sql) === TRUE) {
-        echo "Appointment booked successfully.";
+        header("Location: ../route/index.php?message=Appointment booked successfully.");
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        header("Location: ../route/index.php?error=Error: " . $conn->error);
     }
 }
 

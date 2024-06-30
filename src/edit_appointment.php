@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($available_slots <= 0) {
         // No available slots for the selected mechanic on the chosen date
-        header("Location: admin.php?error=No available slots for Mechanic '$mechanic_name' on $appointment_date.");
+        header("Location: ../route/admin.php?error=No available slots for Mechanic '$mechanic_name' on $appointment_date.");
         exit();
     }
 

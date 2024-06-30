@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Car Workshop Appointment</title>
+    <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <h1>Book an Appointment</h1>
+        <!-- Display success or error messages if they exist -->
+        <?php
+    if (isset($_GET['message'])) {
+        echo "<p style='color: green;'>{$_GET['message']}</p>";
+    }
+    if (isset($_GET['error'])) {
+        echo "<p style='color: red;'>{$_GET['error']}</p>";
+    }
+    ?>
     <div id="appointmentContainer">
         <form id="appointmentForm" action="../src/process_appointment.php" method="post"> <!-- Adjusted path to process_appointment.php -->
             <label for="name">Name:</label>
